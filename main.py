@@ -12,7 +12,6 @@ concurrent_interval = 3
 start_user = 1
 
 
-
 # 访客
 def client():
     # chrome config
