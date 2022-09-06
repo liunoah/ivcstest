@@ -6,9 +6,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 
 is_headless = 0
-url = "https://192.168.31.31:3004/test.html"
-response = requests.get('http://192.168.31.31:3001/rooms/')
-print(response.json())
+url = "https://192.168.10.31:3004/test.html"
+response = requests.get('http://192.168.10.31:3001/rooms/')
 response = response.json()
 
 
@@ -32,28 +31,30 @@ def agent():
     ch_option.add_argument('--use-fake-device-for-media-stream')
     if is_headless:
         ch_option.add_argument('--headless')
-        ch_option.add_argument('--disable-gpu')
+        ch_option.add_argument('--disable-cpu')
 
     driver_agent = webdriver.Chrome(options=ch_option)
     # driver1 = webdriver.Chrome(options=ch_option)
 
-    driver_agent.get(url)
-    sleep(3)
-    js = 'window.open("https://www.sogou.com");'
-    driver_agent.execute_script(js)
-
-    print('window.open("' + url + '?room=' + '631566bc524ccf4b38ff0aa4' + ');')
-    js = 'window.open("' + url + '?room=' + '631566bc524ccf4b38ff0aa4' + ');'
-    driver_agent.execute_script(js)
-    # for index in range(0, 10):
-    #     print(11111111111111111)
-    #     print(response[index])
-    #     print('window.open("' + url + '?room=' + response[index]['id'] + ');')
-    #     js = 'window.open("' + url + '?room=' + response[index]['id'] + ');'
-    #     driver_agent.execute_script(js)
-
-    sleep(1500)
+    driver_agent.get("file:///C:/")
+    for index in range(0, 20):
+        sleep(3)
+        print('window.open("' + url + '?room=' + response[index]['id'] + '");')
+        for j in range(0, 1):
+            sleep(1)
+            js = 'window.open("' + url + '?room=' + response[index]['id'] + '");'
+            driver_agent.execute_script(js)
+    sleep(600)
+    window = driver_agent.window_handles
+    for index in window:
+        sleep(1)
+        driver_agent.switch_to.window(index)
+        driver_agent.close()
     driver_agent.quit()
 
 
-agent()
+for index1 in range(0, 2):
+    _thread.start_new_thread(agent, ())
+# _thread.start_new_thread(agent, ())
+# _thread.start_new_thread(agent, ())
+sleep(10000)
