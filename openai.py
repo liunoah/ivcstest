@@ -35,7 +35,6 @@ def mian():
 
     # 禁用chrome 展示为机器人
     # ch_option.add_argument("disable-blink-features=AutomationControlled")
-    print(111111111)
     driver = webdriver.Chrome(options=ch_option)
 
     driver.get("https://baidu.com")
