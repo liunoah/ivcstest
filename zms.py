@@ -4,13 +4,10 @@ import requests
 from time import sleep
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-# no care https waning
-import urllib3
 
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 is_headless = 0
-url = "https://192.168.31.204:3004/irtc"
-response = requests.get('https://192.168.10.31:3004/rooms/', verify=False)
+url = "https://192.168.10.31:3004/test.html"
+response = requests.get('http://192.168.10.31:3001/rooms/')
 response = response.json()
 
 
@@ -36,29 +33,18 @@ def agent():
         ch_option.add_argument('--headless')
         ch_option.add_argument('--disable-cpu')
 
-    # driver1 = webdriver.Chrome(options=ch_option)
     driver_agent = webdriver.Chrome(options=ch_option)
-    # driver_agent1 = webdriver.Chrome(options=ch_option)
+    # driver1 = webdriver.Chrome(options=ch_option)
 
     driver_agent.get("file:///C:/")
-    for index in range(0, 10):
-        sleep(1)
+    for index in range(0, 20):
+        sleep(3)
         print('window.open("' + url + '?room=' + response[index]['id'] + '");')
         for j in range(0, 1):
             sleep(1)
             js = 'window.open("' + url + '?room=' + response[index]['id'] + '");'
             driver_agent.execute_script(js)
-
-    # driver_agent1.get("file:///C:/")
-    # for index in range(15, 30):
-    #     sleep(1)
-    #     print('window.open("' + url + '?room=' + response[index]['id'] + '");')
-    #     for j in range(0, 1):
-    #         sleep(1)
-    #         js = 'window.open("' + url + '?room=' + response[index]['id'] + '");'
-    #         driver_agent1.execute_script(js)
-
-    sleep(60000)
+    sleep(600)
     window = driver_agent.window_handles
     for index in window:
         sleep(1)
@@ -67,6 +53,8 @@ def agent():
     driver_agent.quit()
 
 
-for index1 in range(0, 1):
+for index1 in range(0, 2):
     _thread.start_new_thread(agent, ())
-sleep(60000)
+# _thread.start_new_thread(agent, ())
+# _thread.start_new_thread(agent, ())
+sleep(10000)
