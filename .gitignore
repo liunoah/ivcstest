@@ -1,0 +1,6 @@
+.pytest_cache
+build
+chrome
+venv
+chromedriver.exe
+LICENSE.chromedriver
